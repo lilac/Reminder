@@ -23,7 +23,7 @@ class Database(context: Context) extends SQLiteOpenHelper(context, Database.NAME
   
   def wrapWriteAction[T](f: SQLiteDatabase => T): T = f(getWritableDatabase)
   
-  object ReminderTable {
+  object Reminders {
     val get = wrapReadAction(Database.ReminderTable.get)
     val insert = wrapWriteAction(Database.ReminderTable.insert)
     val update = wrapWriteAction(Database.ReminderTable.update)
@@ -67,11 +67,11 @@ object Database {
     def contentValues(reminder: Reminder): ContentValues = {
       val values: ContentValues = new ContentValues()
       values.put(TITLE, reminder.title)
-      values.put(TIME, reminder.time.getTime)
-      values.put(REPEAT, reminder.repeat)
-      values.put(INTERVAL, reminder.interval.count)
-      values.put(INTERVAL_TYPE, reminder.interval.t.ordinal())
-      values.put(STATUS, reminder.status)
+      values.put(TIME, new java.lang.Long(reminder.time.getTime))
+      values.put(REPEAT, new Integer(reminder.repeat))
+      values.put(INTERVAL, new Integer(reminder.interval.count))
+      values.put(INTERVAL_TYPE, new Integer(reminder.interval.t.ordinal()))
+      values.put(STATUS, new Integer(reminder.status))
       values
     }
 
@@ -82,7 +82,7 @@ object Database {
 
     def update(db: SQLiteDatabase) (reminder: Reminder): Int = {
       val values = contentValues(reminder)
-      db.update(REMINDER, values, s"$_ID = ?", Array(reminder.id.toString))
+      db.update(REMINDER, values, s"${_ID} = ?", Array(reminder.id.toString))
     }
     
     def get(db: SQLiteDatabase) (id: Long): Option[Reminder] = {
