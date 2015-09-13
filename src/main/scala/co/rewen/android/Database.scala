@@ -3,8 +3,10 @@ package co.rewen.android
 import java.util.Date
 
 import android.content.{ContentValues, Context}
+import android.database.Cursor
 import android.database.sqlite.{SQLiteDatabase, SQLiteOpenHelper}
 import android.provider.BaseColumns
+import co.rewen.android.Database.ReminderTable
 
 /**
  * Copyright Junjun Deng 2015.
@@ -28,6 +30,7 @@ class Database(context: Context) extends SQLiteOpenHelper(context, Database.NAME
     val insert = wrapWriteAction(Database.ReminderTable.insert)
     val update = wrapWriteAction(Database.ReminderTable.update)
     val delete = wrapWriteAction(Database.ReminderTable.delete)
+    lazy val all = wrapReadAction(ReminderTable.all)
   }
 
 }
@@ -88,20 +91,32 @@ object Database {
     def get(db: SQLiteDatabase) (id: Long): Option[Reminder] = {
       val cursor = db.query(REMINDER, columns, s"${_ID} = ?", Array(id.toString), null, null, null, null)
       if (cursor.moveToFirst()) {
-        val intervalType = cursor.getInt(5)
-        val interval = Interval(cursor.getInt(4), IntervalType.values()(intervalType))
-        val reminder = Reminder(
-          id = cursor.getLong(0),
-          title = cursor.getString(1),
-          time = new Date(cursor.getInt(2)),
-          repeat = cursor.getInt(3),
-          interval = interval,
-          status = cursor.getInt(6)
-        )
+        val reminder = fromCursor(cursor)
         Some(reminder)
       } else {
         None
       }
+    }
+
+    def all(db: SQLiteDatabase): Cursor = {
+      /*
+      val query = s"SELECT * FROM ${REMINDER}"
+      db.rawQuery(query, null)
+       */
+      db.query(REMINDER, columns, null, null, null, null, null)
+    }
+
+    def fromCursor(cursor: Cursor): Reminder = {
+      val intervalType = cursor.getInt(5)
+      val interval = Interval(cursor.getInt(4), IntervalType.values()(intervalType))
+      Reminder(
+        id = cursor.getLong(0),
+        title = cursor.getString(1),
+        time = new Date(cursor.getInt(2)),
+        repeat = cursor.getInt(3),
+        interval = interval,
+        status = cursor.getInt(6)
+      )
     }
     
     def delete(db: SQLiteDatabase) (id: Long): Int = {

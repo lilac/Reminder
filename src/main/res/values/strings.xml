@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:xliff="http://schemas.android.com/apk/res-auto">
 
     <string name="app_name">Simple</string>
     <string name="hello_scala">Hello, Scala !</string>
 
+    <string name="repeat_info">Repeat every <xliff:g name="interval" example="hour">%s</xliff:g> for %d times</string>
 </resources>
