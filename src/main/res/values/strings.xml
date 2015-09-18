@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:xliff="http://schemas.android.com/apk/res-auto">
 
-    <string name="app_name">Simple</string>
-    <string name="hello_scala">Hello, Scala !</string>
+    <string name="app_name">Reminder</string>
 
-    <string name="repeat_info">Repeat every <xliff:g name="interval" example="hour">%s</xliff:g> for %d times</string>
+    <string name="repeat_info">Repeat every <xliff:g name="count" example="3">%d</xliff:g> <xliff:g name="interval" example="hour">%s</xliff:g> for <xliff:g name="repeat" example="3">%d</xliff:g> times</string>
+    <string name="minute">minute</string>
+    <string name="hour">hour</string>
+    <string name="day">day</string>
+    <string name="week">week</string>
+    <string name="month">month</string>
 </resources>

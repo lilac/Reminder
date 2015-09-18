@@ -20,4 +20,19 @@ object Util {
     val status = Reminder.ON
     Reminder(id, title, date, repeat, interval, status)
   }
+
+  def translateInterval(t: IntervalType): Int = {
+    t match {
+      case IntervalType.Min =>
+        R.string.minute
+      case IntervalType.Hour =>
+        R.string.hour
+      case IntervalType.Day =>
+        R.string.day
+      case IntervalType.Week =>
+        R.string.week
+      case IntervalType.Month =>
+        R.string.month
+    }
+  }
 }

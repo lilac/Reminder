@@ -34,7 +34,7 @@ android {
 
     productFlavors {
         dev {
-            minSdkVersion 21 // To reduce compilation time
+            minSdkVersion 11 // To reduce compilation time
         }
 
         prod {
@@ -46,4 +46,9 @@ android {
 dependencies {
     compile 'org.scala-lang:scala-library:2.11.7'
     compile 'com.android.support:multidex:1.0.1'
+
+    compile 'com.android.support:design:22.2.1'
+    compile 'com.android.support:appcompat-v7:22.2.1'
+    compile 'com.android.support:recyclerview-v7:22.2.1'
+    compile 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
 }

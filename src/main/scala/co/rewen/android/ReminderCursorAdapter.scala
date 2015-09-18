@@ -8,6 +8,8 @@ import android.support.v7.widget.RecyclerView
 import android.view.{LayoutInflater, View, ViewGroup}
 import android.widget.{ImageView, TextView}
 import co.rewen.android.Database.ReminderTable
+import com.amulyakhare.textdrawable.TextDrawable
+import com.amulyakhare.textdrawable.util.ColorGenerator
 
 /**
  * Copyright Junjun Deng 2015.
@@ -50,14 +52,21 @@ object ReminderCursorAdapter {
         case _ =>
           R.drawable.ic_notifications_active_white_24dp
       }
-      val text: String = context.getString(R.string.repeat_info, value.interval, value.repeat.asInstanceOf[Integer])
+      val interval: String = context.getString(Util.translateInterval(value.interval.t))
+      val text: String = context.getString(R.string.repeat_info, value.interval.count.asInstanceOf[Integer], interval,
+        value.repeat.asInstanceOf[Integer])
       mInfo.setText(text)
       mStatus.setImageResource(icon)
+
     }
 
     def setTitle(title: String): Unit = {
       mTitle.setText(title)
+      val letter = title.substring(0, 1)
+      val color: Int = ColorGenerator.DEFAULT.getRandomColor
+
+      val thumbnail = TextDrawable.builder.buildRound(letter, color)
+      mThumbnail.setImageDrawable(thumbnail)
     }
   }
-
 }

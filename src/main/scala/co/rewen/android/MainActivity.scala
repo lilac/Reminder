@@ -1,11 +1,11 @@
 package co.rewen.android
 
-import android.app.Activity
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.{LinearLayoutManager, RecyclerView, Toolbar}
 
-class MainActivity extends Activity {
+class MainActivity extends AppCompatActivity {
   var mList: Option[RecyclerView] = None
   var mToolbar: Option[Toolbar] = None
   var mAdd: Option[FloatingActionButton] = None
@@ -29,6 +29,9 @@ class MainActivity extends Activity {
         table.insert(reminder)
       }
     }
+    toolbar.setTitle(R.string.app_name)
+    setSupportActionBar(toolbar)
+
     val adapter = new ReminderCursorAdapter(this, cursor)
     list.setAdapter(adapter)
     list.setLayoutManager(new LinearLayoutManager(this))
