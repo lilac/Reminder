@@ -14,7 +14,7 @@ import com.amulyakhare.textdrawable.util.ColorGenerator
 /**
  * Copyright Junjun Deng 2015.
  */
-class ReminderCursorAdapter(context: Context, cursor: Cursor)
+class ReminderCursorAdapter(context: Context, cursor: Cursor, listener: Reminder => Unit)
   extends CursorRecyclerViewAdapter[ReminderCursorAdapter.ViewHolder](context, cursor) {
   type VH = ReminderCursorAdapter.ViewHolder
 
@@ -27,13 +27,13 @@ class ReminderCursorAdapter(context: Context, cursor: Cursor)
     val context = parent.getContext
     val inflater = LayoutInflater.from(context)
     val root = inflater.inflate(R.layout.reminder, parent, false)
-    new ReminderCursorAdapter.ViewHolder(root)
+    new ReminderCursorAdapter.ViewHolder(root, listener)
   }
 }
 
 object ReminderCursorAdapter {
 
-  class ViewHolder(view: View) extends RecyclerView.ViewHolder(view) {
+  class ViewHolder(view: View, listener: Reminder => Unit) extends RecyclerView.ViewHolder(view) {
     val context = view.getContext
 
     val mTitle: TextView = view.findViewById(R.id.title).asInstanceOf[TextView]
@@ -58,6 +58,7 @@ object ReminderCursorAdapter {
       mInfo.setText(text)
       mStatus.setImageResource(icon)
 
+      view.setOnClickListener(new ItemClickListener(listener, value))
     }
 
     def setTitle(title: String): Unit = {
@@ -67,6 +68,12 @@ object ReminderCursorAdapter {
 
       val thumbnail = TextDrawable.builder.buildRound(letter, color)
       mThumbnail.setImageDrawable(thumbnail)
+    }
+  }
+
+  class ItemClickListener[T](listener: T => Unit, value: T) extends View.OnClickListener {
+    override def onClick(v: View): Unit = {
+      listener(value)
     }
   }
 }

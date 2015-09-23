@@ -9,4 +9,12 @@
     <string name="day">day</string>
     <string name="week">week</string>
     <string name="month">month</string>
+
+    <string name="date">Date</string>
+    <string name="time">Time</string>
+    <string name="repeat">Repeat</string>
+    <string name="interval">Interval</string>
+    <string name="interval_type">Interval Type</string>
+
+    <string name="discard">discard</string>
 </resources>
