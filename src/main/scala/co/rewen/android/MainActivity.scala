@@ -19,9 +19,13 @@ class MainActivity extends AppCompatActivity with ReminderListFragment.OnItemSel
     setSupportActionBar(toolbar)
 
     val fragment = new ReminderListFragment()
-    getSupportFragmentManager.beginTransaction()
-      .add(R.id.main, fragment)
-      .commit()
+    val fragmentManager = getSupportFragmentManager
+    val mainFragment = fragmentManager.findFragmentById(R.id.main)
+    if (mainFragment == null) {
+      fragmentManager.beginTransaction()
+        .add(R.id.main, fragment)
+        .commit()
+    }
   }
 
   override def onItemSelected(item: Reminder): Unit = {
