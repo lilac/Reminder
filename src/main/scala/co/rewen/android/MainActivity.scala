@@ -1,7 +1,6 @@
 package co.rewen.android
 
 import android.os.Bundle
-import android.support.v4.app.FragmentManager
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
@@ -9,7 +8,7 @@ import android.view.MenuItem
 class MainActivity extends AppCompatActivity
 with ReminderListFragment.OnItemSelected
 with SupportActionBar
-with FragmentManager.OnBackStackChangedListener {
+with HasBackStack {
 
   var mToolbar: Option[Toolbar] = None
 
@@ -34,8 +33,7 @@ with FragmentManager.OnBackStackChangedListener {
         .add(R.id.main, fragment)
         .commit()
     }
-    onBackStackChanged()
-    fragmentManager.addOnBackStackChangedListener(this)
+    initBackStack()
   }
 
   override def onItemSelected(item: Reminder): Unit = {
@@ -53,9 +51,5 @@ with FragmentManager.OnBackStackChangedListener {
       case _ =>
     }
     super.onOptionsItemSelected(item)
-  }
-
-  override def onBackStackChanged(): Unit = {
-    getSupportActionBar.setDisplayHomeAsUpEnabled(getSupportFragmentManager.getBackStackEntryCount > 0)
   }
 }
