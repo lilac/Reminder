@@ -1,13 +1,14 @@
 package co.rewen.android
 
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.MenuItem
 import co.rewen.android.common.{HasBackStack, SupportActionBar}
 
 class MainActivity extends AppCompatActivity
-with ReminderListFragment.OnItemSelected
+with ReminderListFragment.Observer
 with SupportActionBar
 with HasBackStack {
 
@@ -39,6 +40,10 @@ with HasBackStack {
 
   override def onItemSelected(item: Reminder): Unit = {
     val fragment = EditReminderFragment.newInstance(Some(item.id))
+    showFragment(fragment)
+  }
+
+  def showFragment(fragment: Fragment) = {
     getSupportFragmentManager.beginTransaction()
       .replace(R.id.main, fragment)
       .addToBackStack(null)
@@ -53,5 +58,10 @@ with HasBackStack {
       case _ =>
         super.onOptionsItemSelected(item)
     }
+  }
+
+  override def onAddItem(): Unit = {
+    val fragment = EditReminderFragment.newInstance(None)
+    showFragment(fragment)
   }
 }

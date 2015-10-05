@@ -64,8 +64,12 @@ class EditReminderFragment extends Fragment {
 
   override def onPause(): Unit = {
     if (saveChange) {
-      val updated = mergeDiff(model, state)
-      database.Reminders.update(updated)
+      val reminder = mergeDiff(model, state)
+      if (reminder.id < 0) {
+        database.Reminders.insert(reminder)
+      } else {
+        database.Reminders.update(reminder)
+      }
     }
     super.onPause()
   }
