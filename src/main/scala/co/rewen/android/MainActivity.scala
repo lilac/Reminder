@@ -1,10 +1,16 @@
 package co.rewen.android
 
 import android.os.Bundle
+import android.support.v4.app.FragmentManager
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
+import android.view.MenuItem
 
-class MainActivity extends AppCompatActivity with ReminderListFragment.OnItemSelected {
+class MainActivity extends AppCompatActivity
+with ReminderListFragment.OnItemSelected
+with SupportActionBar
+with FragmentManager.OnBackStackChangedListener {
+
   var mToolbar: Option[Toolbar] = None
 
   protected override def onCreate(savedInstanceState: Bundle) {
@@ -17,6 +23,8 @@ class MainActivity extends AppCompatActivity with ReminderListFragment.OnItemSel
 
     toolbar.setTitle(R.string.app_name)
     setSupportActionBar(toolbar)
+    val actionBar = getSupportActionBar
+    actionBar.setDisplayShowHomeEnabled(true)
 
     val fragment = new ReminderListFragment()
     val fragmentManager = getSupportFragmentManager
@@ -26,6 +34,7 @@ class MainActivity extends AppCompatActivity with ReminderListFragment.OnItemSel
         .add(R.id.main, fragment)
         .commit()
     }
+    fragmentManager.addOnBackStackChangedListener(this)
   }
 
   override def onItemSelected(item: Reminder): Unit = {
@@ -34,5 +43,18 @@ class MainActivity extends AppCompatActivity with ReminderListFragment.OnItemSel
       .replace(R.id.main, fragment)
       .addToBackStack(null)
       .commit()
+  }
+
+  override def onOptionsItemSelected(item: MenuItem): Boolean = {
+    item.getItemId match {
+      case android.R.id.home =>
+        onBackPressed()
+      case _ =>
+    }
+    super.onOptionsItemSelected(item)
+  }
+
+  override def onBackStackChanged(): Unit = {
+    getSupportActionBar.setDisplayHomeAsUpEnabled(getSupportFragmentManager.getBackStackEntryCount > 0)
   }
 }

@@ -16,16 +16,21 @@ class EditReminderFragment extends Fragment {
   var model: Reminder = Reminder()
   var state: ViewState = null
 
+  private var database: Database = null
+
   override def onCreate(savedInstanceState: Bundle): Unit = {
     super.onCreate(savedInstanceState)
 
+    database = new Database(getActivity)
     val args = getArguments
     val id = args.getLong(ID)
     if (id != 0) {
-      val reminder = new Database(getActivity).Reminders.get(id)
+      val reminder = database.Reminders.get(id)
       reminder.foreach(model = _)
     }
     state = new ViewState(model)
+
+    setHasOptionsMenu(true)
   }
 
   override def onCreateOptionsMenu(menu: Menu, inflater: MenuInflater): Unit = {
@@ -38,6 +43,22 @@ class EditReminderFragment extends Fragment {
     val title = view.findViewById(R.id.title).asInstanceOf[EditText]
     BindUtils.bindTextView(title, state.title)
     view
+  }
+
+  override def onOptionsItemSelected(item: MenuItem): Boolean = {
+    item.getItemId match {
+      case R.id.discard =>
+        database.Reminders.delete(model.id)
+        getActivity.onBackPressed()
+        true
+      case _ =>
+        super.onOptionsItemSelected(item)
+    }
+  }
+
+  override def onDestroy(): Unit = {
+    database.close()
+    super.onDestroy()
   }
 }
 

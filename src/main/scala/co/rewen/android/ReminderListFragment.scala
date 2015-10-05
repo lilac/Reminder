@@ -16,14 +16,16 @@ class ReminderListFragment extends Fragment {
   var mAdd: Option[FloatingActionButton] = None
 
   var listener: OnItemSelected = null
-
-  override def onCreate(savedInstanceState: Bundle): Unit = {
-    super.onCreate(savedInstanceState)
-  }
+  var database: Database = null
 
   override def onAttach(activity: Activity): Unit = {
     super.onAttach(activity)
     listener = activity.asInstanceOf[OnItemSelected]
+  }
+
+  override def onCreate(savedInstanceState: Bundle): Unit = {
+    super.onCreate(savedInstanceState)
+    database = new Database(getActivity)
   }
 
   override def onCreateView(inflater: LayoutInflater, container: ViewGroup, savedInstanceState: Bundle): View = {
@@ -33,7 +35,7 @@ class ReminderListFragment extends Fragment {
     mList = Some(list)
     mAdd = Some(add)
 
-    val table = new Database(getActivity).Reminders
+    val table = database.Reminders
     val cursor = table.all
     if (cursor.getCount == 0) {
       for (i <- 1 to 10) {
@@ -47,6 +49,11 @@ class ReminderListFragment extends Fragment {
     list.setLayoutManager(new LinearLayoutManager(getActivity))
 
     view
+  }
+
+  override def onDestroy(): Unit = {
+    database.close()
+    super.onDestroy()
   }
 }
 
