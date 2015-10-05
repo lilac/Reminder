@@ -1,4 +1,4 @@
-package co.rewen.android
+package co.rewen.android.common
 
 import android.support.v7.app.ActionBar
 import android.support.v7.widget.Toolbar

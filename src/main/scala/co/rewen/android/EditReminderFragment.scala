@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view._
 import android.widget.EditText
-import co.rewen.android.common.State
+import co.rewen.android.common.{BindUtils, State}
 
 /**
  * Copyright Junjun Deng 2015.

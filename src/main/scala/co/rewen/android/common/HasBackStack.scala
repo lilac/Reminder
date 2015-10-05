@@ -1,4 +1,4 @@
-package co.rewen.android
+package co.rewen.android.common
 
 import android.support.v4.app.FragmentManager
 import android.support.v7.app.AppCompatActivity

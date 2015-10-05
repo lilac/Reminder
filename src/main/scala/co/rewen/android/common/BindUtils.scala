@@ -1,8 +1,7 @@
-package co.rewen.android
+package co.rewen.android.common
 
 import android.text.Editable
 import android.widget.TextView
-import co.rewen.android.common.{Mutable, TextWatcher}
 
 /**
  * Copyright Junjun Deng 2015.
