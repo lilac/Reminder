@@ -47,13 +47,21 @@ class EditReminderFragment extends Fragment {
 
   override def onOptionsItemSelected(item: MenuItem): Boolean = {
     item.getItemId match {
+      case android.R.id.home =>
+        val updated = mergeDiff(model, state)
+        database.Reminders.update(updated)
+        finish()
       case R.id.discard =>
         database.Reminders.delete(model.id)
-        getActivity.onBackPressed()
-        true
+        finish()
       case _ =>
         super.onOptionsItemSelected(item)
     }
+  }
+
+  def finish() = {
+    getActivity.onBackPressed()
+    true
   }
 
   override def onDestroy(): Unit = {
@@ -68,6 +76,10 @@ object EditReminderFragment {
   class ViewState(v: Reminder) {
     val title = new State[String](v.title)
 
+  }
+
+  def mergeDiff(model: Reminder, state: ViewState): Reminder = {
+    model.copy(title = state.title.get())
   }
 
   def newInstance(id: Option[Long]): EditReminderFragment = {

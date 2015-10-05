@@ -3,7 +3,6 @@ package co.rewen.android
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
-import android.view.MenuItem
 
 class MainActivity extends AppCompatActivity
 with ReminderListFragment.OnItemSelected
@@ -42,14 +41,5 @@ with HasBackStack {
       .replace(R.id.main, fragment)
       .addToBackStack(null)
       .commit()
-  }
-
-  override def onOptionsItemSelected(item: MenuItem): Boolean = {
-    item.getItemId match {
-      case android.R.id.home =>
-        onBackPressed()
-      case _ =>
-    }
-    super.onOptionsItemSelected(item)
   }
 }
