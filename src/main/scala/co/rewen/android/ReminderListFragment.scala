@@ -36,7 +36,7 @@ class ReminderListFragment extends Fragment {
     mAdd = Some(add)
 
     val table = database.Reminders
-    val cursor = table.all
+    val cursor = table.all()
     if (cursor.getCount == 0) {
       for (i <- 1 to 10) {
         val reminder = Util.randomReminder()

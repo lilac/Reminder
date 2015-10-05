@@ -17,6 +17,7 @@ class EditReminderFragment extends Fragment {
   var state: ViewState = null
 
   private var database: Database = null
+  private var saveChange = true
 
   override def onCreate(savedInstanceState: Bundle): Unit = {
     super.onCreate(savedInstanceState)
@@ -47,12 +48,9 @@ class EditReminderFragment extends Fragment {
 
   override def onOptionsItemSelected(item: MenuItem): Boolean = {
     item.getItemId match {
-      case android.R.id.home =>
-        val updated = mergeDiff(model, state)
-        database.Reminders.update(updated)
-        finish()
       case R.id.discard =>
         database.Reminders.delete(model.id)
+        saveChange = false
         finish()
       case _ =>
         super.onOptionsItemSelected(item)
@@ -62,6 +60,14 @@ class EditReminderFragment extends Fragment {
   def finish() = {
     getActivity.onBackPressed()
     true
+  }
+
+  override def onPause(): Unit = {
+    if (saveChange) {
+      val updated = mergeDiff(model, state)
+      database.Reminders.update(updated)
+    }
+    super.onPause()
   }
 
   override def onDestroy(): Unit = {

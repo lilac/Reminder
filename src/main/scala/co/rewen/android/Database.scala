@@ -30,7 +30,7 @@ class Database(context: Context) extends SQLiteOpenHelper(context, Database.NAME
     val insert = wrapWriteAction(Database.ReminderTable.insert)
     val update = wrapWriteAction(Database.ReminderTable.update)
     val delete = wrapWriteAction(Database.ReminderTable.delete)
-    lazy val all = wrapReadAction(ReminderTable.all)
+    val all = wrapReadAction(ReminderTable.all)
   }
 
 }
@@ -98,7 +98,7 @@ object Database {
       }
     }
 
-    def all(db: SQLiteDatabase): Cursor = {
+    def all(db: SQLiteDatabase)(): Cursor = {
       /*
       val query = s"SELECT * FROM ${REMINDER}"
       db.rawQuery(query, null)
