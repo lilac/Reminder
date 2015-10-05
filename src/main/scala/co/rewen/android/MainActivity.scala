@@ -34,6 +34,7 @@ with FragmentManager.OnBackStackChangedListener {
         .add(R.id.main, fragment)
         .commit()
     }
+    onBackStackChanged()
     fragmentManager.addOnBackStackChangedListener(this)
   }
 
