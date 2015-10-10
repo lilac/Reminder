@@ -63,7 +63,7 @@ object ReminderCursorAdapter {
 
     def setTitle(title: String): Unit = {
       mTitle.setText(title)
-      val letter = title.substring(0, 1)
+      val letter = if (title.length > 1) title.substring(0, 1) else ""
       val color: Int = ColorGenerator.DEFAULT.getRandomColor
 
       val thumbnail = TextDrawable.builder.buildRound(letter, color)
