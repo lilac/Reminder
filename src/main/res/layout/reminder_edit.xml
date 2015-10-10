@@ -37,6 +37,30 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:src="@drawable/ic_notifications_active_white_24dp"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                style="@style/PrimaryTextView"
+                android:text="@string/notification"/>
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/notification_switch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/ListItem">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:src="@drawable/ic_view_day_white_24dp"/>
 
             <TextView
@@ -97,10 +121,14 @@
                 style="@style/PrimaryTextView"
                 android:text="@string/repeat"/>
 
-            <android.support.v7.widget.SwitchCompat
-                android:id="@+id/repeat_switch"
+            <EditText
+                android:id="@+id/repeat"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:inputType="numberSigned"
+                android:minWidth="48dp"
+                android:gravity="end"
+                tools:text="0"/>
         </LinearLayout>
 
         <LinearLayout
@@ -121,10 +149,13 @@
                 style="@style/PrimaryTextView"
                 android:text="@string/interval"/>
 
-            <TextView
+            <EditText
                 android:id="@+id/interval"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:inputType="number"
+                android:minWidth="48dp"
+                android:gravity="end"
                 tools:text="3"/>
         </LinearLayout>
 
@@ -146,10 +177,11 @@
                 style="@style/PrimaryTextView"
                 android:text="@string/interval_type"/>
 
-            <TextView
+            <Spinner
                 android:id="@+id/interval_type"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:entries="@array/interval_types"
                 tools:text="Hour"/>
         </LinearLayout>
 

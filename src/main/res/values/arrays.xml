@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="interval_types">
+        <item>@string/minute</item>
+        <item>@string/hour</item>
+        <item>@string/day</item>
+        <item>@string/week</item>
+        <item>@string/month</item>
+    </string-array>
+</resources>

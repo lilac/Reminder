@@ -12,6 +12,7 @@
 
     <string name="date">Date</string>
     <string name="time">Time</string>
+    <string name="notification">Notification</string>
     <string name="repeat">Repeat</string>
     <string name="interval">Interval</string>
     <string name="interval_type">Interval Type</string>
